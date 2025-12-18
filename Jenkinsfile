@@ -1,8 +1,11 @@
 pipeline {
     agent any
 
-    stages {
+    tools {
+        maven 'Maven_3'
+    }
 
+    stages {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
