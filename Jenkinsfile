@@ -6,25 +6,18 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/LasyaMoravineni/moviebooking-backend.git'
-            }
-        }
 
         stage('Build JAR') {
             steps {
                 sh 'mvn clean package -DskipTests'
             }
         }
-        
-        stage('Check Docker') {
-		    steps {
-		        sh 'docker --version'
-		    }
-		}
 
+        stage('Check Docker') {
+            steps {
+                sh 'docker --version'
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
