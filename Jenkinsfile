@@ -1,12 +1,21 @@
 pipeline {
     agent any
 
-
     stages {
-		
-		stage('Checkout Code') {
+
+        stage('Checkout') {
             steps {
                 checkout scm
+            }
+        }
+
+        stage('Verify Tools') {
+            steps {
+                sh '''
+                java -version
+                mvn -version
+                docker --version
+                '''
             }
         }
 
@@ -16,24 +25,18 @@ pipeline {
             }
         }
 
-        stage('Check Docker') {
-            steps {
-                sh 'docker --version'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t moviebooking-backend .'
+                sh 'docker build -t moviebooking-backend:latest .'
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Run Container') {
             steps {
                 sh '''
                 docker stop moviebooking-backend || true
                 docker rm moviebooking-backend || true
-                docker run -d -p 8080:8080 --name moviebooking-backend moviebooking-backend
+                docker run -d -p 8080:8080 --name moviebooking-backend moviebooking-backend:latest
                 '''
             }
         }
