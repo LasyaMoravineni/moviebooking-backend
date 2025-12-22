@@ -31,7 +31,7 @@ pipeline {
                 sh '''
                 docker stop moviebooking-backend || true
                 docker rm moviebooking-backend || true
-                docker run -d -p 8080:8080 --name moviebooking-backend moviebooking-backend
+                docker run -d -p 8081:8080 --name moviebooking-backend moviebooking-backend
                 '''
             }
         }
