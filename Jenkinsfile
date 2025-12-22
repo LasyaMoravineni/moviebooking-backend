@@ -10,12 +10,12 @@ pipeline {
             }
         }
 
-        stage('Build JAR') {
-            steps {
-                sh 'mvn -v'
-                sh 'mvn clean package -DskipTests'
-            }
-        }
+		stage('Build JAR') {
+		    steps {
+		        sh 'mvn -v'
+		        sh 'mvn -DskipTests compile'
+		    }
+		}
 
         stage('Build Docker Image') {
             steps {
