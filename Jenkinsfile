@@ -12,10 +12,13 @@ pipeline {
 
 		stage('Build JAR') {
 		    steps {
-		        sh 'mvn -v'
-		        sh 'mvn -DskipTests compile'
+		        sh '''
+		        export MAVEN_OPTS="-Xms256m -Xmx512m -XX:MaxMetaspaceSize=256m"
+		        mvn clean package -DskipTests -Dmaven.compiler.fork=true
+		        '''
 		    }
 		}
+	
 
         stage('Build Docker Image') {
             steps {
