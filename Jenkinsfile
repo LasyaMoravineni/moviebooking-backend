@@ -35,5 +35,14 @@ pipeline {
                 '''
             }
         }
+
+        stage('Cleanup') {
+            steps {
+                sh '''
+                docker image prune -af || true
+                rm -rf ~/.m2/repository || true
+                '''
+            }
+        }
     }
 }
