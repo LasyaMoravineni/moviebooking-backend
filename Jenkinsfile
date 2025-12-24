@@ -10,37 +10,20 @@ pipeline {
             }
         }
 
-		stage('Build JAR') {
-		    steps {
-		        sh '''
-		        export MAVEN_OPTS="-Xms256m -Xmx512m -XX:MaxMetaspaceSize=256m"
-		        mvn clean package -DskipTests -Dmaven.compiler.fork=true
-		        '''
-		    }
-		}
-	
-
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t moviebooking-backend .'
-            }
-        }
-
-        stage('Run Docker Container') {
+        stage('Build JAR') {
             steps {
                 sh '''
-                docker stop moviebooking-backend || true
-                docker rm moviebooking-backend || true
-                docker run -d -p 8081:8080 --name moviebooking-backend moviebooking-backend
+                export MAVEN_OPTS="-Xms256m -Xmx512m"
+                mvn clean package -DskipTests
                 '''
             }
         }
 
-        stage('Cleanup') {
+        stage('Run Application') {
             steps {
                 sh '''
-                docker image prune -af || true
-                rm -rf ~/.m2/repository || true
+                pkill -f moviebooking || true
+                nohup java -jar target/moviebooking-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
                 '''
             }
         }
