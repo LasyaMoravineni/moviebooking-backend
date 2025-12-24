@@ -1,18 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Movie Booking App</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<h1>🎬 Movie Booking Application</h1>
+<header>
+    <h1>🎬 Movie Booking</h1>
+    <p>Browse movies & book shows</p>
+</header>
 
-<button onclick="loadMovies()">Load Movies</button>
+<section class="filters">
+    <select id="genreFilter">
+        <option value="">All Genres</option>
+        <option value="Action">Action</option>
+        <option value="Drama">Drama</option>
+        <option value="Comedy">Comedy</option>
+    </select>
 
-<ul id="movies"></ul>
+    <select id="languageFilter">
+        <option value="">All Languages</option>
+        <option value="English">English</option>
+        <option value="Hindi">Hindi</option>
+    </select>
 
-<script src="app.js"></script>
+    <button onclick="loadMovies()">Apply Filters</button>
+</section>
+
+<section id="movies" class="movie-grid">
+    <!-- Movie cards injected here -->
+</section>
+
+<script src="js/app.js"></script>
 </body>
 </html>
-
